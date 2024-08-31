@@ -33,38 +33,17 @@ end
 
 
 # Defining dbserver, similar to webserver
-config.vm.define "dbserver" do |dbserver|
-  dbserver.vm.hostname = "dbserver"
+  config.vm.define "dbserver" do |dbserver|
+    dbserver.vm.hostname = "dbserver"
+    dbserver.vm.network "private_network", ip: "192.168.2.13"
+    
+    # Did it in the labs so adding it here incase for marking
+    dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-  dbserver.vm.network "private_network", ip: "192.168.2.12"
-  dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+    # makes my files more organized to put it separately
+    dbserver.vm.provision "shell", path: "dbserver.sh"
 
-  dbserver.vm.provision "shell", inline: <<-SHELL
-  apt-get update
-  
-  #Set up mysql
+  end
 
-  export MYSQL_PWD='insecure_mysqlroot_pw'
-
-  echo "mysql-server mysql-server/root_password password $PASSWORD" | debconf-set-selections 
-  echo "mysql-server mysql-server/root_password_again password $PASSWORD" | debconf-set-selections
-  
-
-  apt-get -y install mysql-server
-  
-  # Creating database
-  echo "CREATE DATABASE fvision;" | mysql
- 
-  echo "CREATE USER 'netuser'@'%' IDENTIFIED BY 'insecure_db_pw';" | mysql
-  echo "GRANT ALL PRIVILEGES ON fvision.* TO 'netUser'@'%'" | mysql
-..
-  export MYSQL_PWD='insecure_db_pw'
-  
-  cat /vagrant/setup-database.sql | mysql -u netUser fvision
-  sed -i'' -e '/bind-address/s/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
- 
-  service mysql restart
-SHELL
-end
 
 end
