@@ -3,7 +3,7 @@
   
   # Creating shell that contains the root password for mysql
   export MYSQL_PWD='password'
-  echo "mysql-server mysql-server/root_password password $MYSQL_PWD" | debconf-set-selections 
+  echo "mysql-server mysql-server/root_password password Bluehawk98" | debconf-set-selections 
   echo "mysql-server mysql-server/root_password_again password $MYSQL_PWD" | debconf-set-selections
   
   # Install the MySQL database server.

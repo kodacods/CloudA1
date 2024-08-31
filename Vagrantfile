@@ -19,16 +19,8 @@ Vagrant.configure("2") do |config|
     webserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
     # webserver commands
-    webserver.vm.provision "shell", inline: <<-SHELL
-    apt-get update
-    apt-get install -y apache2 php libapache2-mod-php php-mysql
-          
-    # Make sure to change webservers congif for shared folder
-    cp /vagrant/test-website.conf /etc/apache2/sites-available/
-    a2ensite test-website
-    a2dissite 000-default
-    service apache2 reload
-  SHELL
+    webserver.vm.provision "shell", path: "webserver.sh"
+
 end
 
 
@@ -40,7 +32,7 @@ end
     # Did it in the labs so adding it here incase for marking
     dbserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
 
-    # makes my files more organized to put it separately
+    # makes my files more organized to put it sep
     dbserver.vm.provision "shell", path: "dbserver.sh"
 
   end
