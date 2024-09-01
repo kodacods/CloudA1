@@ -1,6 +1,5 @@
-apt-get update
+  apt-get update
   
-
   #ROOT PASSWORD
   export MYSQL_PWD='password'
   
@@ -9,15 +8,15 @@ apt-get update
   
   apt-get -y install mysql-server
   
-  echo "CREATE DATABASE bookings;" | mysql
-  echo "CREATE USER 'originuser'@'%' IDENTIFIED BY 'password1';" | mysql
-  echo "GRANT ALL PRIVILEGES ON bookings.* TO 'originuser'@'%'" | mysql
+  echo "CREATE DATABASE IF NOT EXISTS reservations;" | mysql
+  echo "CREATE USER IF NOT EXISTS 'user1'@'%' IDENTIFIED BY 'password';" | mysql  
+  echo "GRANT ALL PRIVILEGES ON reservations.* TO 'user1'@'%'" | mysql
   
-  export MYSQL_PWD='password1234'
-  
-  cat /vagrant/setup-database.sql | mysql -u originuser reservations
+    cat /vagrant/setup-database.sql | mysql -u user1 reservations
 
- #Update MySQL to allow remote connections.
+  #Update MySQL to allow remote connections.
   sed -i'' -e '/bind-address/s/127.0.0.1/0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
   
   service mysql restart
+
+  

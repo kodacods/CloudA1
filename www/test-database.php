@@ -18,26 +18,34 @@ th, td {
 <body>
 <h1>Database test page</h1>
 
-<p>Showing contents of papers table:</p>
+<p>Showing contents of reservations table:</p>
 
 <table border="1">
-<tr><th>Paper code</th><th>Paper name</th></tr>
+<tr><th>Reservation ID</th><th>Customer ID</th><th>Table ID</th><th>Date</th><th>Time</th><th>Party Size</th><th>Special Requests</th></tr>
 
 <?php
  
 $db_host   = '192.168.56.12';
-$db_name   = 'fvision';
-$db_user   = 'webuser';
-$db_passwd = 'insecure_db_pw';
+$db_name   = 'bookings';  
+$db_user   = 'user1';    
+$db_passwd = 'password1234';  
 
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
 $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
 
-$q = $pdo->query("SELECT * FROM papers");
+$q = $pdo->query("SELECT * FROM reservations");
 
 while($row = $q->fetch()){
-  echo "<tr><td>".$row["code"]."</td><td>".$row["name"]."</td></tr>\n";
+  echo "<tr>
+          <td>".$row["reservation_id"]."</td>
+          <td>".$row["customer_id"]."</td>
+          <td>".$row["table_id"]."</td>
+          <td>".$row["reservation_date"]."</td>
+          <td>".$row["reservation_time"]."</td>
+          <td>".$row["party_size"]."</td>
+          <td>".$row["special_requests"]."</td>
+        </tr>\n";
 }
 
 ?>
