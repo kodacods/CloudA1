@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "ubuntu/xenial64"
 
+  #Client VM
   config.vm.define "webserver" do |webserver|
     webserver.vm.hostname = "webserver"
     
@@ -21,7 +22,21 @@ Vagrant.configure("2") do |config|
 
   end
 
+  #Staff VM
+  config.vm.define "adminserver" do |adminserver|
+    adminserver.vm.hostname = "adminserver"
+  
+    adminserver.vm.network "forwarded_port", guest: 80, host: 8081, host_ip: "127.0.0.1"
+     
+    adminserver.vm.network "private_network", ip: "192.168.2.12"
+      
+    adminserver.vm.synced_folder ".", "/vagrant", owner: "vagrant", group: "vagrant", mount_options: ["dmode=775,fmode=777"]
+  
+    adminserver.vm.provision "shell", path: "staffserver.sh"
+  
+    end
 
+  #Database VM
   config.vm.define "dbserver" do |dbserver|
     dbserver.vm.hostname = "dbserver"
     
