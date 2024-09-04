@@ -14,7 +14,7 @@
         /* insert information from index to database */
         $sql = "INSERT INTO bookings (first_name, last_name) VALUES ('$first_name', '$last_name')";
         if(mysqli_query($link, $sql)){
-            echo "Records added successfully. Choose one of the following options: </br>";
+            echo "Your reservation has been successfully submitted!</br>";
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         }
@@ -22,5 +22,4 @@
         mysqli_close($link);
 ?>
 
-<a class="currentBookings" href="http://192.168.2.12"> Go to staff portal</a>
 <a class="currentBookings" href="http://192.168.2.11"> Make another reservation</a>

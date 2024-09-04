@@ -1,18 +1,12 @@
-#!/bin/bash
-
-
 apt-get update
 apt-get install -y apache2 php libapache2-mod-php php-mysql
+    
+# Change VM's adminserver's configuration to use shared folder.
+cp /vagrant/staff.conf /etc/apache2/sites-available/
 
-cp /vagrant/testweb.conf /etc/apache2/sites-available/
-
-
-a2ensite testweb
+# activate admin configuration ...
+a2ensite staff
+# ... and disable the default website provided with Apache
 a2dissite 000-default
-
-echo "ServerName localhost" | tee /etc/apache2/conf-available/fqdn.conf
-a2enconf fqdn
-
-mkdir -p /vagrant/www
-
-systemctl restart apache2
+# Reload the adminserver configuration, to pick up changes
+service apache2 reload
