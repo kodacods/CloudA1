@@ -1,13 +1,34 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+?>
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
-<head><title>Reservations</title></head>
+<head>
+    <title>Reservations</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f4f4f4; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #4CAF50; color: white; }
+        .logout { float: right; }
+    </style>
+</head>
 
 <body>
 <h1>Staff Portal</h1>
+<a href="logout.php" class="logout">Logout</a>
 
 <p>Viewing all reservations:</p>
 
-<table >
+<table>
 <tr><th>First Name</th><th>Last Name</th></tr>
 
 <?php
@@ -19,15 +40,20 @@ $db_passwd = 'password';
 
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
-$pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+try {
+    $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-$q = $pdo->query("SELECT * FROM bookings");
+    $q = $pdo->query("SELECT * FROM bookings");
 
-while($row = $q->fetch()){
-  echo "<tr>
-          <td>".$row["first_name"]."</td>
-          <td>".$row["last_name"]."</td>
-        </tr>\n";
+    while($row = $q->fetch()){
+      echo "<tr>
+              <td>".$row["first_name"]."</td>
+              <td>".$row["last_name"]."</td>
+            </tr>\n";
+    }
+} catch (PDOException $e) {
+    echo "Database error: " . $e->getMessage();
 }
 
 ?>
