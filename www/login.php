@@ -1,8 +1,11 @@
 <?php
+error_log("Script started");
 session_start();
+error_log("Session started");
 
 // If already logged in, redirect to index.php
 if (isset($_SESSION['user_id'])) {
+    error_log("User already logged in, redirecting to index.php");
     header("Location: index.php");
     exit();
 }
@@ -10,6 +13,7 @@ if (isset($_SESSION['user_id'])) {
 $error = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    error_log("Form submitted via POST");
     $db_host   = '192.168.2.13';
     $db_name   = 'reservations';
     $db_user   = 'user1';
@@ -18,24 +22,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
     try {
+        error_log("Attempting database connection");
         $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        error_log("Database connection successful");
 
         $username = $_POST['username'];
         $password = $_POST['password'];
 
+        error_log("Attempting login with username: " . $username);
+        error_log("Password length: " . strlen($password));
+
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("User found: " . ($user ? "Yes" : "No"));
 
-        if ($user && password_verify($password, $user['password'])) {
-            $_SESSION['user_id'] = $user['id'];
-            header("Location: index.php");
-            exit();
+        if ($user) {
+            error_log("Attempting to verify password for user: " . $username);
+            $passwordVerified = password_verify($password, $user['password']);
+            error_log("Password verified: " . ($passwordVerified ? "Yes" : "No"));
+            if ($passwordVerified) {
+                error_log("Login successful for user: " . $username);
+                $_SESSION['user_id'] = $user['id'];
+                error_log("Session created with user_id: " . $user['id']);
+                header("Location: index.php");
+                exit();
+            } else {
+                error_log("Password verification failed for user: " . $username);
+                error_log("Password hash info: " . print_r(password_get_info($user['password']), true));
+                $error = "Invalid username or password";
+            }
         } else {
+            error_log("User not found: " . $username);
             $error = "Invalid username or password";
         }
     } catch (PDOException $e) {
+        error_log("Database error: " . $e->getMessage());
         $error = "Database error: " . $e->getMessage();
     }
 }
@@ -58,7 +81,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h1>Staff Login</h1>
-        <?php if ($error) echo "<p class='error'>$error</p>"; ?>
+        <?php 
+        if ($error) {
+            error_log("Displaying error message to user: " . $error);
+            echo "<p class='error'>$error</p>";
+        }
+        ?>
         <form method="post">
             <input type="text" name="username" placeholder="Username" required><br>
             <input type="password" name="password" placeholder="Password" required><br>
