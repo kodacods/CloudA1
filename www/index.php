@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
 <p>Viewing all reservations:</p>
 
 <table>
-<tr><th>First Name</th><th>Last Name</th></tr>
+<tr><th>First Name</th><th>Last Name</th><th>Date</th><th>Time</th></tr>
 
 <?php
  
@@ -46,10 +46,12 @@ try {
 
     $q = $pdo->query("SELECT * FROM bookings");
 
-    while($row = $q->fetch()){
+    while($row = $q->fetch(PDO::FETCH_ASSOC)){
       echo "<tr>
-              <td>".$row["first_name"]."</td>
-              <td>".$row["last_name"]."</td>
+              <td>".htmlspecialchars($row["first_name"])."</td>
+              <td>".htmlspecialchars($row["last_name"])."</td>
+              <td>".htmlspecialchars($row["booking_date"])."</td>
+              <td>".htmlspecialchars($row["booking_time"])."</td>
             </tr>\n";
     }
 } catch (PDOException $e) {

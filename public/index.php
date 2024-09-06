@@ -57,7 +57,9 @@
             color: #333;
         }
 
-        input[type="text"] {
+        input[type="text"],
+        input[type="date"],
+        input[type="time"] {
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
@@ -88,15 +90,61 @@
             <a href="http://192.168.2.12/login.php" class="staff-portal-btn">Staff Portal</a>
         </div>
 
-        <form method="post" action="insert.php" class="inputForm">  
+        <form method="post" action="insert.php" class="inputForm" onsubmit="return validateForm()">  
             <label for="first_name">First Name:</label>
             <input class="submitBooking" type="text" id="first_name" name="first_name" placeholder="e.g. Jane" required>
 
             <label for="last_name">Last Name:</label>
             <input class="submitBooking" type="text" id="last_name" name="last_name" placeholder="e.g. Doe" required>
 
+            <label for="date">Date:</label>
+            <input class="submitBooking" type="date" id="date" name="date" required>
+
+            <label for="time">Time:</label>
+            <input class="submitBooking" type="time" id="time" name="time" required>
+            
             <input class="bookingSubmit" type="submit" value="Submit">
         </form>
     </div>
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+
+        function validateForm() {
+            const dateInput = document.getElementById('date');
+            const timeInput = document.getElementById('time');
+
+            // Validate date
+            const selectedDate = new Date(dateInput.value);
+            const currentDate = new Date();
+            currentDate.setHours(0, 0, 0, 0);
+
+            if (selectedDate < currentDate) {
+                alert("Please select a date from today onwards.");
+                return false;
+            }
+
+            // Validate time
+            const selectedTime = timeInput.value;
+            const [hours, minutes] = selectedTime.split(':');
+            const selectedDateTime = new Date(selectedDate);
+            selectedDateTime.setHours(hours, minutes);
+
+            const openingTime = new Date(selectedDate);
+            openingTime.setHours(9, 0);
+
+            const closingTime = new Date(selectedDate);
+            closingTime.setHours(22, 0);
+
+            if (selectedDateTime < openingTime || selectedDateTime > closingTime) {
+                alert("Please select a time between 9:00 AM and 10:00 PM.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
