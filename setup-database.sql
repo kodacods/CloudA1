@@ -22,4 +22,4 @@ INSERT INTO bookings (first_name, last_name) VALUES
 
 -- Insert a user with a hashed password (password is 'staffpass')
 INSERT INTO users (username, password) VALUES 
-('staff', '$2y$10$GkVZTuWRgrbvtUXGTBEjNei/zPbHsipq7jl.PZQlGH1WIwRVFvg1S');
+('staff', 'pass');

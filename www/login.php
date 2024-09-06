@@ -40,8 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($user) {
             error_log("Attempting to verify password for user: " . $username);
+            error_log("Input password: " . $password);
+            error_log("Stored hash: " . $user['password']);
             $passwordVerified = password_verify($password, $user['password']);
-            error_log("Password verified: " . ($passwordVerified ? "Yes" : "No"));
+            error_log("password_verify() result: " . var_export($passwordVerified, true));
             if ($passwordVerified) {
                 error_log("Login successful for user: " . $username);
                 $_SESSION['user_id'] = $user['id'];
