@@ -3,7 +3,7 @@ error_log("Script started");
 session_start();
 error_log("Session started");
 
-// If already logged in, redirect to index.php
+# If already logged in, redirect to index.php
 if (isset($_SESSION['user_id'])) {
     error_log("User already logged in, redirecting to index.php");
     header("Location: index.php");

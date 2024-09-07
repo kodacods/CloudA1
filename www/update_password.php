@@ -22,7 +22,7 @@ try {
     echo "Result: " . ($result ? "Success" : "Failure") . "<br>";
     echo "New hash: " . $hashed_password . "<br>";
 
-    // Verify the update
+    # Verify the update
     $verify_stmt = $pdo->prepare("SELECT password FROM users WHERE username = ?");
     $verify_stmt->execute([$username]);
     $stored_hash = $verify_stmt->fetchColumn();
@@ -30,7 +30,7 @@ try {
     echo "Stored hash after update: " . $stored_hash . "<br>";
     echo "Hashes match: " . ($hashed_password === $stored_hash ? "Yes" : "No") . "<br>";
 
-    // Verify the password works
+    # Verify the password works
     echo "Password verification test: " . (password_verify($new_password, $stored_hash) ? "Success" : "Failure");
 
 } catch (PDOException $e) {
