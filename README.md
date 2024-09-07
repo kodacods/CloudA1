@@ -11,7 +11,7 @@ Virtual box and Vagrant must be installed to run the application.
 1. Clone the repository:
 
 ```
-git clone https://github.com/Akira-bug/H3MA-Score-Keeper.git
+git clone https://github.com/kodacods/CloudA1.git
 ```
 
 2. Open your terminal and navigate to the repo directory
@@ -22,10 +22,10 @@ git clone https://github.com/Akira-bug/H3MA-Score-Keeper.git
 vagrant up
 ```
 
-4. Navigate to:
+4. In your browser navigate to:
 
 ```
-
+http://192.168.2.11
 ```
 
 ## Application design
