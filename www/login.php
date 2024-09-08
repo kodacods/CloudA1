@@ -21,6 +21,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
+
+    try {
+        $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+        $username = 'staff';
+        $new_password = 'staffpass';
+    
+        $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+    
+        $stmt = $pdo->prepare("UPDATE users SET password = ? WHERE username = ?");
+        $result = $stmt->execute([$hashed_password, $username]);
+    
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+
     try {
         error_log("Attempting database connection");
         $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
