@@ -25,7 +25,7 @@ vagrant up
 4. In your browser navigate to:
 
 ```
-http://192.168.2.11
+http://192.168.2.11/website.php
 ```
 
 ## Application design
