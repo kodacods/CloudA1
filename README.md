@@ -32,6 +32,5 @@ http://192.168.2.11/website.php
 
 In the application there are three virtual machines running, one for the user facing web interface, staff portal and database. When a customer makes a reservation through the Public Server (insert.php), it connects to the Database Server at 192.168.2.13 using specific credentials to insert the reservation into the 'bookings' table. Similarly, when a staff member logs in through the Staff Server, it uses the same credentials to verify the user login details against the users in the database and proceeds to display all bookings from the 'bookings' table if successful. The public reservation page on the Public Server includes a link to the Staff Portal, which redirects users to the login page on the Staff Server (http://192.168.2.12/login.php).
 
-
+Username: staff
 Password: staffpass
-```
