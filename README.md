@@ -1,3 +1,5 @@
+Stella Yan ID:6876840
+
 # Stella's Tacoria
 
 This application is designed to take reservations for Stella's Tacoria and also admin/staff access to view current bookings.
