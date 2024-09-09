@@ -21,6 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
+    // Update the staff password to properly hash it for login, I could not figure out how to do this in my 
+    // setup-database.php script
 
     try {
         $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
@@ -38,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error: " . $e->getMessage();
     }
 
+    // Main login logic
     try {
         error_log("Attempting database connection");
         $pdo = new PDO($pdo_dsn, $db_user, $db_passwd);
@@ -50,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Attempting login with username: " . $username);
         error_log("Password length: " . strlen($password));
 
+        // Prepare and execute query to fetch user data
         $stmt = $pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
