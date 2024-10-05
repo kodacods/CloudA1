@@ -3,148 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stella's Tacoria - Reservation</title>
+    <title>Stella's Tacoria 🌮</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
+            background-color: #e8f5e9; /* Light green background */
         }
-
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
+        header {
+            background-color: #2e7d32; /* Dark green */
+            color: #fff;
             text-align: center;
-            color: #333;
+            padding: 1rem;
         }
-
-        .button-container {
-            text-align: right;
-            margin-bottom: 20px;
+        nav {
+            background-color: #388e3c; /* Medium green */
+            color: #fff;
+            padding: 0.5rem;
         }
-
-        .staff-portal-btn {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        nav ul li a {
+            color: #fff;
             text-decoration: none;
         }
-
-        .staff-portal-btn:hover {
-            background-color: #0056b3;
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
         }
-
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        label {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="time"] {
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        input[type="submit"] {
-            padding: 12px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #218838;
+        .btn {
+            display: inline-block;
+            background: #2e7d32; /* Dark green */
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Stella's Tacoria</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Menu</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
     <div class="container">
-        <h1>Make a Reservation</h1>
-        
-        <div class="button-container">
-            <a href="http://192.168.2.12/login.php" class="staff-portal-btn">Staff Portal</a>
-        </div>
-
-        <form method="post" action="insert.php" class="inputForm" onsubmit="return validateForm()">  
-            <label for="first_name">First Name:</label>
-            <input class="submitBooking" type="text" id="first_name" name="first_name" placeholder="e.g. Jane" required>
-
-            <label for="last_name">Last Name:</label>
-            <input class="submitBooking" type="text" id="last_name" name="last_name" placeholder="e.g. Doe" required>
-
-            <label for="date">Date:</label>
-            <input class="submitBooking" type="date" id="date" name="date" required>
-
-            <label for="time">Time:</label>
-            <input class="submitBooking" type="time" id="time" name="time" required>
-            
-            <input class="bookingSubmit" type="submit" value="Submit">
-        </form>
+        <h2>Welcome to Stella's Tacoria</h2>
+        <p>Experience the finest Mexican cuisine in town!</p>
+        <a href="/website.php" class="btn">Make a Reservation</a>
     </div>
-
-    <script>
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('date').setAttribute('min', today);
-
-        function validateForm() {
-            const dateInput = document.getElementById('date');
-            const timeInput = document.getElementById('time');
-
-            // Validate date
-            const selectedDate = new Date(dateInput.value);
-            const currentDate = new Date();
-            currentDate.setHours(0, 0, 0, 0);
-
-            if (selectedDate < currentDate) {
-                alert("Please select a date from today onwards.");
-                return false;
-            }
-
-            // Validate time
-            const selectedTime = timeInput.value;
-            const [hours, minutes] = selectedTime.split(':');
-            const selectedDateTime = new Date(selectedDate);
-            selectedDateTime.setHours(hours, minutes);
-
-            const openingTime = new Date(selectedDate);
-            openingTime.setHours(9, 0);
-
-            const closingTime = new Date(selectedDate);
-            closingTime.setHours(22, 0);
-
-            if (selectedDateTime < openingTime || selectedDateTime > closingTime) {
-                alert("Please select a time between 9:00 AM and 10:00 PM.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
+    <div class="container" id="menu">
+        <h2>Our Menu</h2>
+        <p>Check out our delicious tacos, burritos, and more!</p>
+        <p> We only sell tacos, no need for menus folks! </p>
+    </div>
+    <div class="container" id="about">
+        <h2>About Us</h2>
+        <p>Stella's Tacoria has been serving authentic Mexican food since 2010.</p>
+    </div>
+    <div class="container" id="contact">
+        <h2>Contact Us</h2>
+        <p>Phone: (123) 456-7890</p>
+        <p>Email: info@stellasTacoria.com</p>
+        <p>Address: 123 Taco Street, Foodville, QT 12345</p>
+    </div>
 </body>
 </html>

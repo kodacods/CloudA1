@@ -1,5 +1,5 @@
 <?php 
-$link = mysqli_connect('192.168.2.13', 'user1', 'password', 'reservations');
+$link = mysqli_connect('database-3.cuhonx0mb1xs.us-east-1.rds.amazonaws.com', 'user1', 'password', 'reservations');
 
 if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
@@ -28,7 +28,7 @@ $sql = "INSERT INTO bookings (first_name, last_name, booking_date, booking_time)
 if(mysqli_query($link, $sql)){
     echo "Your reservation has been successfully submitted!</br>";
 } else{
-    echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+    echo "ERROR: Could not execute $sql. " . mysqli_error($link);
 }
 
 mysqli_close($link);

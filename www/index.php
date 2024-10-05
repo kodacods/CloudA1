@@ -1,13 +1,3 @@
-<?php
-session_start();
-
-# Check if user is logged in
-if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
-    exit();
-}
-
-?>
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <html>
 <head>
@@ -24,7 +14,6 @@ if (!isset($_SESSION['user_id'])) {
 
 <body>
 <h1>Staff Portal</h1>
-<a href="logout.php" class="logout">Logout</a>
 
 <p>Viewing all reservations:</p>
 
@@ -32,11 +21,12 @@ if (!isset($_SESSION['user_id'])) {
 <tr><th>First Name</th><th>Last Name</th><th>Date</th><th>Time</th></tr>
 
 <?php
- 
-$db_host   = '192.168.2.13';
+
+$db_host   = "database-3.cuhonx0mb1xs.us-east-1.rds.amazonaws.com";
 $db_name   = 'reservations';  
 $db_user   = 'user1';    
-$db_passwd = 'password';  
+$db_passwd = 'stella2002';  
+
 
 $pdo_dsn = "mysql:host=$db_host;dbname=$db_name";
 
@@ -59,6 +49,7 @@ try {
 }
 
 ?>
+
 </table>
 </body>
 </html>
