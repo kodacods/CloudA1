@@ -1,5 +1,5 @@
 <?php 
-$link = mysqli_connect('database-3.cuhonx0mb1xs.us-east-1.rds.amazonaws.com', 'user1', 'password', 'reservations');
+$link = mysqli_connect('databs.us-east-1.rds.amazonaws.com', 'user1', 'stella2002', 'reservations');
 
 if($link === false){
     die("ERROR: Could not connect. " . mysqli_connect_error());
@@ -34,4 +34,4 @@ if(mysqli_query($link, $sql)){
 mysqli_close($link);
 ?>
 
-<a class="currentBookings" href="http://192.168.2.11"> Make another reservation</a>
+<a class="currentBookings" href="http://ec2-3-92-211-67.compute-1.amazonaws.com/website.php"> Make another reservation</a>

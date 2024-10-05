@@ -87,10 +87,10 @@
         <h1>Make a Reservation</h1>
         
         <div class="button-container">
-            <a href="http://192.168.2.12/index.php" class="staff-portal-btn">Staff Portal</a>
+            <a href="http://ec2-3-92-211-67.compute-1.amazonaws.com/index.php" class="staff-portal-btn">Staff Portal</a>
         </div>
 
-        <form method="post" action="insert.php" class="inputForm" onsubmit="return validateForm()">  
+        <form method="post" action="insert.php" class="inputForm">  
             <label for="first_name">First Name:</label>
             <input class="submitBooking" type="text" id="first_name" name="first_name" placeholder="e.g. Jane" required>
 
