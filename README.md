@@ -57,6 +57,8 @@ Next SSH into the staff instance and download the following packages:
 4. AWS client
 5. Cron
 
+Remember run start httpd in each instance after SSHing before proceeding to the public DNS!
+
 ## Database set-up
 
 In AWS create a RDS database and connect it to both the EC2 instances. In the staff instance, connect to the database and create coressponding mysql tables and `reservations` database.
